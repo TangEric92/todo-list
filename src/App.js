@@ -16,9 +16,8 @@ function App() {
     // On a defini notre tache
     const task = { title: title, state: false };
     // On ajoute notre task a notre liste de tache
-    tasks.push(task);
     // On update tasks avec le nouveau tableau
-    setTasks(tasks);
+    setTasks([...tasks, task]);
     // On clean title
     setTitle("");
   };
@@ -28,7 +27,7 @@ function App() {
       <h1>To-Do list</h1>
       {tasks &&
         tasks.map((task, index) => {
-          return <p>{task.title}</p>;
+          return <p key={index}>{task.title}</p>;
         })}
       <form onSubmit={submitTitle}>
         <input
