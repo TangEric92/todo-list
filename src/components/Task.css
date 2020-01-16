@@ -1,0 +1,15 @@
+.task-wrapper {
+  display: flex;
+  flex-direction: row;
+  color: #616c77;
+  margin: 5px;
+}
+
+.task-delete {
+  cursor: pointer;
+  padding-right: 5px;
+}
+
+.task-title {
+  cursor: pointer;
+}
