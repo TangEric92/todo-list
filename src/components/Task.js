@@ -2,7 +2,7 @@ import React from "react";
 import "./Task.css";
 
 function Task(props) {
-  const { index, title, state, deleteTask, changeState } = props;
+  const { index, title, state, deleteTask, changeState, editTask } = props;
 
   return (
     <div className="task-wrapper">
@@ -17,6 +17,9 @@ function Task(props) {
         style={{ textDecoration: state ? "line-through" : "" }}
       >
         {title}
+      </span>
+      <span className="task-edition" onClick={() => editTask(index)}>
+        O
       </span>
     </div>
   );

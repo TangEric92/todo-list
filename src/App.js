@@ -6,6 +6,7 @@ import Task from "./components/Task";
 function App() {
   const [title, setTitle] = useState("");
   const [search, setSearch] = useState("");
+  const [edition, setEdition] = useState(-1); // si edition === -1 : il n'y a rien a editer, sinon c'est la position de l'élément a éditer
   const [tasks, setTasks] = useState([]);
 
   const handleTitleChange = e => {
@@ -18,15 +19,30 @@ function App() {
 
   const submitTitle = e => {
     e.preventDefault();
-    // On check que title ne soit pas vide
-    if (title === "") return;
-    // On a defini notre tache
-    const task = { title: title, state: false };
-    // On ajoute notre task a notre liste de tache
-    // On update tasks avec le nouveau tableau
-    setTasks([...tasks, task]);
+
+    // On check si edition est > -1 pour savoir si on doit recuperer un element pour le modifier
+    if (edition > -1) {
+      // On check que title ne soit pas vide
+      if (title === "") return;
+      // On recupere l'élément a modifier
+      const task = tasks[edition];
+      // On le met à jour
+      task.title = title;
+      // On update tasks avec le nouveau tableau
+      setTasks([...tasks]);
+    } else {
+      // On check que title ne soit pas vide
+      if (title === "") return;
+      // On a defini notre tache
+      const task = { title: title, state: false };
+      // On ajoute notre task a notre liste de tache
+      // On update tasks avec le nouveau tableau
+      setTasks([...tasks, task]);
+    }
     // On clean title
     setTitle("");
+    // On clean edition
+    setEdition(-1);
   };
 
   const changeState = index => {
@@ -42,6 +58,11 @@ function App() {
     } else {
       setTasks([task, ...tasks]);
     }
+  };
+
+  const editTask = index => {
+    setEdition(index);
+    setTitle(tasks[index].title);
   };
 
   const deleteTask = index => {
@@ -71,6 +92,7 @@ function App() {
                 state={task.state}
                 deleteTask={deleteTask}
                 changeState={changeState}
+                editTask={editTask}
               />
             );
           }
